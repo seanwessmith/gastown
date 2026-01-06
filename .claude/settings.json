@@ -1,0 +1,51 @@
+{
+  "enabledPlugins": {
+    "beads@beads-marketplace": false
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gt prime && gt mail check --inject && gt nudge deacon session-started && /Users/sws/gt/scripts/track-session-cost.sh start $(tmux display-message -p '#S' 2>/dev/null || echo 'unknown')"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gt prime"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "gt mail check --inject"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/sws/gt/scripts/track-session-cost.sh end $(tmux display-message -p '#S' 2>/dev/null || echo 'unknown') $(gt hook --json 2>/dev/null | jq -r '.bead_id // empty' || echo '')"
+          }
+        ]
+      }
+    ]
+  }
+}
